@@ -14,8 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.MessageFormat;
 import java.text.AttributedCharacterIterator.Attribute;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,6 +100,7 @@ public class MergeMain extends javax.swing.JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 MergeMain inst = new MergeMain();
                 inst.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -199,7 +200,6 @@ public class MergeMain extends javax.swing.JFrame {
                     sourceTxt = new JTextField();
                     getContentPane().add(sourceTxt);
                     sourceTxt.setBounds(12, 12, 373, 22);
-                    sourceTxt.setEditable(false);
                 }
                 {
                     sourceBtn = new JButton();
@@ -208,6 +208,7 @@ public class MergeMain extends javax.swing.JFrame {
                     sourceBtn.setBounds(406, 12, 74, 22);
                     sourceBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             JFileChooser fileChooser = new JFileChooser(); // 文件选择器
                             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("属性文件", "properties"));
@@ -231,7 +232,6 @@ public class MergeMain extends javax.swing.JFrame {
                     targetTxt = new JTextField();
                     getContentPane().add(targetTxt);
                     targetTxt.setBounds(496, 12, 419, 22);
-                    targetTxt.setEditable(false);
                 }
                 {
                     targetBtn = new JButton();
@@ -241,6 +241,7 @@ public class MergeMain extends javax.swing.JFrame {
                     targetBtn.setSize(74, 22);
                     targetBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             JFileChooser fileChooser = new JFileChooser(); // 文件选择器
                             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("属性文件", "properties"));
@@ -271,6 +272,7 @@ public class MergeMain extends javax.swing.JFrame {
                         sourceList.setAutoscrolls(true);
                         sourceList.setModel(sourceListModel);
                         sourceList.addKeyListener(new KeyAdapter() {
+                            @Override
                             public void keyPressed(KeyEvent evt) {
                                 if(evt.getKeyCode() == KeyEvent.VK_DELETE){
                                     PropertyLine v = (PropertyLine) sourceList.getSelectedValue();
@@ -286,6 +288,7 @@ public class MergeMain extends javax.swing.JFrame {
                             }
                         });
                         sourceList.addMouseListener(new MouseAdapter() {
+                            @Override
                             public void mouseClicked(MouseEvent evt) {
                                 if(evt.getClickCount() == 2){
                                     Object v = sourceList.getSelectedValue();
@@ -296,6 +299,7 @@ public class MergeMain extends javax.swing.JFrame {
                         });
                         sourceList.addListSelectionListener(new ListSelectionListener() {
 
+                            @Override
                             public void valueChanged(ListSelectionEvent evt) {
                                 if (sourceList.getSelectedValue() != null) {
                                     PropertyLine pl = (PropertyLine) sourceList.getSelectedValue();
@@ -327,6 +331,7 @@ public class MergeMain extends javax.swing.JFrame {
                         targetList.setAutoscrolls(true);
                         targetList.setModel(targetListModel);
                         targetList.addKeyListener(new KeyAdapter() {
+                            @Override
                             public void keyPressed(KeyEvent evt) {
                                 if(evt.getKeyCode() == KeyEvent.VK_DELETE){
                                     PropertyLine v = (PropertyLine) targetList.getSelectedValue();
@@ -342,6 +347,7 @@ public class MergeMain extends javax.swing.JFrame {
                             }
                         });
                         targetList.addMouseListener(new MouseAdapter() {
+                            @Override
                             public void mouseClicked(MouseEvent evt) {
                                 if(evt.getClickCount() == 2){
                                     Object v = targetList.getSelectedValue();
@@ -352,6 +358,7 @@ public class MergeMain extends javax.swing.JFrame {
                         });
                         targetList.addListSelectionListener(new ListSelectionListener() {
 
+                            @Override
                             public void valueChanged(ListSelectionEvent evt) {
                                 if (targetList.getSelectedValue() != null) {
                                     PropertyLine pl = (PropertyLine) targetList.getSelectedValue();
@@ -378,6 +385,7 @@ public class MergeMain extends javax.swing.JFrame {
                     sourceSaveBtn.setBounds(406, 45, 74, 22);
                     sourceSaveBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
 							int result = JOptionPane.showConfirmDialog(MergeMain.this, "确定要保存左属性文件吗？\n" + source.getPropertyFile().getAbsolutePath());
                             if (result == JOptionPane.YES_OPTION) {
@@ -397,6 +405,7 @@ public class MergeMain extends javax.swing.JFrame {
                     targetSaveBtn.setSize(74, 22);
                     targetSaveBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
 							int result = JOptionPane.showConfirmDialog(MergeMain.this, "确定要保存右属性文件吗？\n" + target.getPropertyFile().getAbsolutePath());
                             if (result == JOptionPane.YES_OPTION) {
@@ -415,12 +424,13 @@ public class MergeMain extends javax.swing.JFrame {
                     toTargetBtn.setBounds(406, 221, 74, 22);
                     toTargetBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             Object[] oo = sourceList.getSelectedValues();
                             for (Object selected : oo) {
                                 PropertyLine s = (PropertyLine) selected;
                                 if (s != null && target != null) {
-                                    PropertyLine t = (PropertyLine) target.getLine(s.getKey());
+                                    PropertyLine t = target.getLine(s.getKey());
                                     if (t == null) {
                                         PropertyLine n = s.clone();
                                         n.setState(LineState.added);
@@ -448,12 +458,13 @@ public class MergeMain extends javax.swing.JFrame {
                     toSourceBtn.setBounds(406, 255, 74, 22);
                     toSourceBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             Object[] oo = targetList.getSelectedValues();
                             for (Object selected : oo) {
                                 PropertyLine t = (PropertyLine) selected;
                                 if (t != null && source != null) {
-                                    PropertyLine s = (PropertyLine) source.getLine(t.getKey());
+                                    PropertyLine s = source.getLine(t.getKey());
                                     if (s == null) {
                                         PropertyLine n = t.clone();
                                         n.setState(LineState.added);
@@ -493,6 +504,7 @@ public class MergeMain extends javax.swing.JFrame {
                     compareBtn.setBounds(406, 139, 74, 22);
                     compareBtn.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             compare();
                         }
@@ -505,6 +517,7 @@ public class MergeMain extends javax.swing.JFrame {
                     sourceReloadBtn.setBounds(12, 40, 64, 29);
                     sourceReloadBtn.setSize(90, 22);
                     sourceReloadBtn.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             if(sourceTxt.getText().length() > 0){
                                 File curFile = new File(sourceTxt.getText());
@@ -527,6 +540,7 @@ public class MergeMain extends javax.swing.JFrame {
                     targetReloadBtn.setText("\u91cd\u65b0\u8f7d\u5165");
                     targetReloadBtn.setBounds(839, 45, 90, 22);
                     targetReloadBtn.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             if(targetTxt.getText().length() > 0){
                                 File curFile = new File(targetTxt.getText());
@@ -550,7 +564,8 @@ public class MergeMain extends javax.swing.JFrame {
                 	helpBtn.setBounds(405, 338, 38, 29);
                 	helpBtn.setSize(74, 22);
                 	helpBtn.addActionListener(new ActionListener() {
-                		public void actionPerformed(ActionEvent evt) {
+                		@Override
+                        public void actionPerformed(ActionEvent evt) {
                 			StringBuilder sb = new StringBuilder();
                 			sb.append("双击查看明细和编辑").append("\n");
                 			sb.append("del键删除").append("\n");
@@ -566,7 +581,8 @@ public class MergeMain extends javax.swing.JFrame {
                 	sourceEditBtn.setText("\u7f16\u8f91\u6587\u4ef6");
                 	sourceEditBtn.setBounds(108, 40, 90, 22);
                 	sourceEditBtn.addActionListener(new ActionListener() {
-                		public void actionPerformed(ActionEvent evt) {
+                		@Override
+                        public void actionPerformed(ActionEvent evt) {
                 			if(sourceTxt.getText().length() > 0){
                                 File curFile = new File(sourceTxt.getText());
                                 editFile(curFile);
@@ -580,7 +596,8 @@ public class MergeMain extends javax.swing.JFrame {
                 	targetEditBtn.setText("\u7f16\u8f91\u6587\u4ef6");
                 	targetEditBtn.setBounds(743, 45, 90, 22);
                 	targetEditBtn.addActionListener(new ActionListener() {
-                		public void actionPerformed(ActionEvent evt) {
+                		@Override
+                        public void actionPerformed(ActionEvent evt) {
                 			if(targetTxt.getText().length() > 0){
                                 File curFile = new File(targetTxt.getText());
                                 editFile(curFile);
@@ -622,7 +639,7 @@ public class MergeMain extends javax.swing.JFrame {
         for (PropertyLine line : sourceLines.getProperties()) {
             line.setCompareResult(null);
             if (line.getState() != LineState.deleted) {
-                PropertyLine t = (PropertyLine) targetLines.getLine(line.getKey());
+                PropertyLine t = targetLines.getLine(line.getKey());
                 if (t != null && t.getState() != LineState.deleted) {
                     if (!StringUtils.equals(t.getValue(), line.getValue())) {
                         line.setCompareResult(CompareResult.different);
