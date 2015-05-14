@@ -520,7 +520,7 @@ public class MergeMain extends javax.swing.JFrame {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
                             if(sourceTxt.getText().length() > 0){
-                                File curFile = new File(sourceTxt.getText());
+                                File curFile = new File(sourceTxt.getText().trim());
                                 if(curFile.exists()){
                                     source = new PropertyHolder(curFile, "utf-8");
                                     sourceTxt.setText(curFile.getAbsolutePath());
@@ -543,7 +543,7 @@ public class MergeMain extends javax.swing.JFrame {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
                             if(targetTxt.getText().length() > 0){
-                                File curFile = new File(targetTxt.getText());
+                                File curFile = new File(targetTxt.getText().trim());
                                 if(curFile.exists()){
                                     target = new PropertyHolder(curFile, "utf-8");
                                     targetTxt.setText(curFile.getAbsolutePath());
